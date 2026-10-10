@@ -30,8 +30,7 @@ public class Tasks {
 
     }
 
-    public Tasks(Long id, String title, String description) {
-        this.id = id;
+    public Tasks(String title, String description) {
         this.title = title;
         this.description = description;
     }
@@ -64,6 +63,5 @@ public class Tasks {
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-
 
 }
