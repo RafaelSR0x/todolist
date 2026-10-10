@@ -1,7 +1,7 @@
 package com.todolist.repositories;
 
+import com.todolist.entities.Tasks;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.scheduling.config.Task;
 
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface TaskRepository extends JpaRepository<Tasks, Long> {
 }
