@@ -5,6 +5,7 @@ import com.todolist.entities.Tasks;
 import com.todolist.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,5 +19,8 @@ public class TaskService {
         return taskRepository.save(request);
     }
 
-    public List<TasksDTO> listTasks(){}
+    @Transactional(readOnly = true)
+    public List<TasksDTO> findAllTask(){
+        return taskRepository.findAll().stream().map(TasksDTO::new).toList();
+    }
 }
