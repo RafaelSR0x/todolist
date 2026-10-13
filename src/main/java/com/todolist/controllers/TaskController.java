@@ -44,6 +44,15 @@ public class TaskController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
 
+    @PutMapping("/{taskId}")
+    public ResponseEntity updateTask(@RequestBody Tasks request, @PathVariable Long taskId){
+        try {
+            Tasks tasks = taskService.updateTask(request, taskId);
+            return ResponseEntity.ok(tasks);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }

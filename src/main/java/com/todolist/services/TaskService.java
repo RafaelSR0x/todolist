@@ -27,14 +27,14 @@ public class TaskService {
 
     public TasksDTO findById(Long taskId) {
         Tasks tasks = taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada."));
+                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
 
         return new TasksDTO(tasks);
     }
 
     public Tasks updateTask(Tasks request, Long taskId) {
         Tasks tasks = taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada."));
+                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
 
         tasks.setTitle(request.getTitle());
         tasks.setDescription(request.getDescription());
