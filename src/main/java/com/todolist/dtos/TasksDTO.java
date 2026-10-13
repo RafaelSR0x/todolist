@@ -4,6 +4,15 @@ import com.todolist.entities.Tasks;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({
+        "title",
+        "description",
+        "createdAt",
+        "updatedAt"
+})
+
 public class TasksDTO {
 
     private String title;
