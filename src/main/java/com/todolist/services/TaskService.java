@@ -31,4 +31,14 @@ public class TaskService {
 
         return new TasksDTO(tasks);
     }
+
+    public Tasks updateTask(Tasks request, Long taskId) {
+        Tasks tasks = taskRepository.findById(taskId).
+                orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada."));
+
+        tasks.setTitle(request.getTitle());
+        tasks.setDescription(request.getDescription());
+
+        return taskRepository.save(tasks);
+    }
 }
