@@ -25,8 +25,10 @@ public class TaskService {
         return taskRepository.findAll().stream().map(TasksDTO::new).toList();
     }
 
-    public Tasks findById(Long taskId) {
-        return taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada"));
+    public TasksDTO findById(Long taskId) {
+        Tasks tasks = taskRepository.findById(taskId).
+                orElseThrow(() -> new EntityNotFoundException("Tarefa não encontrada."));
+
+        return new TasksDTO(tasks);
     }
 }
