@@ -41,4 +41,11 @@ public class TaskService {
 
         return taskRepository.save(tasks);
     }
+
+    public void deleteTask(Long taskId){
+        Tasks tasks = taskRepository.findById(taskId).
+                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
+
+        taskRepository.delete(tasks);
+    }
 }
