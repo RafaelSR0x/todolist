@@ -27,50 +27,34 @@ public class TaskController {
     }
 
     @GetMapping()
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<TasksDTO>> findAll() {
         List<TasksDTO> list = taskService.findAllTask();
-
-        if (list.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
 
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity findById(@PathVariable Long taskId) {
-        try {
-            TasksDTO task = taskService.findById(taskId);
-            return ResponseEntity.ok(task);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<TasksDTO> findById(@PathVariable Long taskId) {
+        TasksDTO task = taskService.findById(taskId);
+        return ResponseEntity.ok(task);
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity updateTask(@Valid @RequestBody Tasks request, @PathVariable Long taskId){
-        try {
-            Tasks tasks = taskService.updateTask(request, taskId);
-            return ResponseEntity.ok(tasks);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<Tasks> updateTask(@Valid @RequestBody Tasks request, @PathVariable Long taskId){
+        Tasks tasks = taskService.updateTask(request, taskId);
+        return ResponseEntity.ok(tasks);
     }
 
     @DeleteMapping("/{taskId}")
     public ResponseEntity deleteTask(@PathVariable Long taskId) {
-        try {
-            taskService.deleteTask(taskId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        taskService.deleteTask(taskId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
     @PatchMapping("/{taskId}/completed")
     public ResponseEntity<TasksDTO> markAsCompleted(@PathVariable Long taskId) {
-        Tasks tasks = taskService.markAsRead(taskId);
+        Tasks tasks = taskService.markAsCompleted(taskId);
         TasksDTO dto = new TasksDTO(tasks);
 
         return ResponseEntity.ok(dto);

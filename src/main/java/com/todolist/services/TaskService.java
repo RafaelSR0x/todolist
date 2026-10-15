@@ -6,6 +6,7 @@ import com.todolist.repositories.TaskRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,6 +19,13 @@ public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    //metodo para centralizar a busca de uma tarefa por ID
+    private Tasks findTaskOrThrow(Long taskId) {
+        return taskRepository.findById(taskId).
+                orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "o item com o ID informado não foi encontrado."));
+    }
+
     //Metodo para criar nova tarefa
     public Tasks create(Tasks request) {
         return taskRepository.save(request);
@@ -26,21 +34,21 @@ public class TaskService {
     //Metodo para listar todos as tarefas
     @Transactional(readOnly = true)
     public List<TasksDTO> findAllTask(){
-        return taskRepository.findAll().stream().map(TasksDTO::new).toList();
+        List<TasksDTO> list = taskRepository.findAll().stream().map(TasksDTO::new).toList();
+
+        return list;
     }
 
     //Metodo para retornar apenas uma tarefa pelo ID requisitado
     public TasksDTO findById(Long taskId) {
-        Tasks tasks = taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
+        Tasks tasks = findTaskOrThrow(taskId);
 
         return new TasksDTO(tasks);
     }
 
     //Metodo para atualizar uma tarefa pelo ID requisitado
     public Tasks updateTask(Tasks request, Long taskId) {
-        Tasks tasks = taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
+        Tasks tasks = findTaskOrThrow(taskId);
 
         tasks.setTitle(request.getTitle());
         tasks.setDescription(request.getDescription());
@@ -50,16 +58,14 @@ public class TaskService {
 
     //Metodo para deletar uma tarefa pelo Id requisitado
     public void deleteTask(Long taskId){
-        Tasks tasks = taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
+        Tasks tasks = findTaskOrThrow(taskId);
 
         taskRepository.delete(tasks);
     }
 
     //metodo para marcar como concluido a tarefa
-    public Tasks markAsRead(Long taskId) {
-        Tasks tasks = taskRepository.findById(taskId).
-                orElseThrow(() -> new EntityNotFoundException("o item com o ID informado não foi encontrado."));
+    public Tasks markAsCompleted(Long taskId) {
+        Tasks tasks = findTaskOrThrow(taskId);
 
         if (tasks.isCompleted()) {
             throw new ResponseStatusException(
