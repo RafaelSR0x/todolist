@@ -30,8 +30,8 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Atualizar tarefa
 - [x] Excluir tarefa
 - [x] Marcar tarefa como concluída
-- [ ] Validação dos dados
-- [ ] Tratamento de exceções
+- [x] Validação dos dados
+- [x] Tratamento de exceções
 
 ### Futuras funcionalidades
 
