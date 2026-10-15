@@ -29,7 +29,7 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Buscar tarefa por ID
 - [x] Atualizar tarefa
 - [x] Excluir tarefa
-- [ ] Marcar tarefa como concluída
+- [x] Marcar tarefa como concluída
 - [ ] Validação dos dados
 - [ ] Tratamento de exceções
 
