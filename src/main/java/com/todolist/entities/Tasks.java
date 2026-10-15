@@ -19,6 +19,9 @@ public class Tasks {
 
     private String description;
 
+    @Column(nullable = false)
+    private boolean completed = false;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -30,9 +33,10 @@ public class Tasks {
 
     }
 
-    public Tasks(String title, String description) {
+    public Tasks(String title, String description, boolean completed) {
         this.title = title;
         this.description = description;
+        this.completed = completed;
     }
 
     public Long getId() {
@@ -59,9 +63,15 @@ public class Tasks {
         return createdAt;
     }
 
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }
