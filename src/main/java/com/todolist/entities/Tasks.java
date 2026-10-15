@@ -1,6 +1,8 @@
 package com.todolist.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,9 +16,12 @@ public class Tasks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O título é obrigatório.")
+    @Size(max = 100, message = "O título deve ter no máximo 100 caracteres.")
     @Column(nullable = false)
     private String title;
 
+    @Size(max = 500, message = "A descrição deve ter no máximo 500 caracteres.")
     private String description;
 
     @Column(nullable = false)

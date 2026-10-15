@@ -4,6 +4,7 @@ import com.todolist.dtos.TasksDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.services.TaskService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping()
-    public ResponseEntity<Tasks> createTask(@RequestBody Tasks request) {
+    public ResponseEntity<Tasks> createTask(@Valid @RequestBody Tasks request) {
         Tasks tasks = taskService.create(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(tasks);
@@ -47,7 +48,7 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity updateTask(@RequestBody Tasks request, @PathVariable Long taskId){
+    public ResponseEntity updateTask(@Valid @RequestBody Tasks request, @PathVariable Long taskId){
         try {
             Tasks tasks = taskService.updateTask(request, taskId);
             return ResponseEntity.ok(tasks);
