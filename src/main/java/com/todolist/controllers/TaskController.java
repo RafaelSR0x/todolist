@@ -66,4 +66,12 @@ public class TaskController {
         }
 
     }
+
+    @PatchMapping("/{taskId}/completed")
+    public ResponseEntity<TasksDTO> markAsCompleted(@PathVariable Long taskId) {
+        Tasks tasks = taskService.markAsRead(taskId);
+        TasksDTO dto = new TasksDTO(tasks);
+
+        return ResponseEntity.ok(dto);
+    }
 }
