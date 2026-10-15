@@ -24,11 +24,11 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 
 ### Em desenvolvimento
 
-- [ ] Criar tarefa
-- [ ] Listar tarefas
-- [ ] Buscar tarefa por ID
-- [ ] Atualizar tarefa
-- [ ] Excluir tarefa
+- [x] Criar tarefa
+- [x] Listar tarefas
+- [x] Buscar tarefa por ID
+- [x] Atualizar tarefa
+- [x] Excluir tarefa
 - [ ] Marcar tarefa como concluída
 - [ ] Validação dos dados
 - [ ] Tratamento de exceções
