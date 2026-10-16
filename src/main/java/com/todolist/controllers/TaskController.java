@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,14 @@ public class TaskController {
     }
 
     @GetMapping()
-    public ResponseEntity<PageResponseDTO<TasksDTO>> findAllPaged(@PageableDefault(page = 0, size = 3)Pageable pageable) {
+    public ResponseEntity<PageResponseDTO<TasksDTO>> findAllPaged(
+            @PageableDefault(
+                    page = 0,
+                    size = 3,
+                    sort = "createdAt",
+                    direction = Sort.Direction.DESC)
+            Pageable pageable) {
+
         Page<TasksDTO> tasksPage = taskService.findAllPaged(pageable);
 
         PageResponseDTO<TasksDTO> response = new PageResponseDTO<>(
