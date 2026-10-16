@@ -33,11 +33,11 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Validação dos dados
 - [x] Tratamento de exceções
 - [x] Paginação
-- [ ] Filtros e ordenação
+- [x] Filtros e ordenação
+- [ ] Autenticação e autorização
 
 ### Futuras funcionalidades
 
-- [ ] Autenticação e autorização
 - [ ] Documentação da API com Swagger/OpenAPI
 - [ ] Testes automatizados
 - [ ] Docker
