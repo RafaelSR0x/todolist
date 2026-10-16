@@ -4,7 +4,6 @@ import com.todolist.dtos.PageResponseDTO;
 import com.todolist.dtos.TasksDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.services.TaskService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,8 +13,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
@@ -33,6 +30,8 @@ public class TaskController {
 
     @GetMapping()
     public ResponseEntity<PageResponseDTO<TasksDTO>> findAllPaged(
+            @RequestParam(required = false) Boolean completed,
+            @RequestParam(required = false) String title,
             @PageableDefault(
                     page = 0,
                     size = 3,
@@ -40,7 +39,7 @@ public class TaskController {
                     direction = Sort.Direction.DESC)
             Pageable pageable) {
 
-        Page<TasksDTO> tasksPage = taskService.findAllPaged(pageable);
+        Page<TasksDTO> tasksPage = taskService.findAllPaged(completed, title, pageable);
 
         PageResponseDTO<TasksDTO> response = new PageResponseDTO<>(
                 tasksPage.getContent(),
