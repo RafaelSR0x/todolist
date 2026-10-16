@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-
 @Service
 public class TaskService {
 
@@ -33,8 +31,8 @@ public class TaskService {
 
     //Metodo para listar todos as tarefas com paginação
     @Transactional(readOnly = true)
-    public Page<TasksDTO> findAllPaged(Pageable pageable){
-        Page<Tasks> tasksPage = taskRepository.findAll(pageable);
+    public Page<TasksDTO> findAllPaged(Boolean completed, String title,Pageable pageable){
+        Page<Tasks> tasksPage = taskRepository.findAllFiltered(completed, title, pageable);
 
         return tasksPage.map(TasksDTO::new);
     }
