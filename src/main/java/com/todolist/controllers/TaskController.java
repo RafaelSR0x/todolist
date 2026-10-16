@@ -1,5 +1,6 @@
 package com.todolist.controllers;
 
+import com.todolist.dtos.PageResponseDTO;
 import com.todolist.dtos.TasksDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.services.TaskService;
@@ -30,10 +31,20 @@ public class TaskController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<TasksDTO>> findAllPage(@PageableDefault(page = 0, size = 2)Pageable pageable) {
-        Page<TasksDTO> tasks = taskService.findAllPaged(pageable);
+    public ResponseEntity<PageResponseDTO<TasksDTO>> findAllPaged(@PageableDefault(page = 0, size = 3)Pageable pageable) {
+        Page<TasksDTO> tasksPage = taskService.findAllPaged(pageable);
 
-        return ResponseEntity.ok(tasks);
+        PageResponseDTO<TasksDTO> response = new PageResponseDTO<>(
+                tasksPage.getContent(),
+                tasksPage.getNumber(),
+                tasksPage.getSize(),
+                tasksPage.getTotalPages(),
+                tasksPage.getTotalElements(),
+                tasksPage.isFirst(),
+                tasksPage.isLast()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{taskId}")
