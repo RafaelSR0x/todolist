@@ -32,10 +32,11 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Marcar tarefa como concluída
 - [x] Validação dos dados
 - [x] Tratamento de exceções
+- [ ] Paginação
 
 ### Futuras funcionalidades
 
-- [ ] Paginação
+
 - [ ] Filtros e ordenação
 - [ ] Autenticação e autorização
 - [ ] Documentação da API com Swagger/OpenAPI
@@ -48,8 +49,9 @@ A estrutura será organizada seguindo uma separação de responsabilidades:
 
 ```text
 src/main/java/com/todolist
-├── controller
-├── service
-├── repository
-├── entity
-└── dto
+├── controllers
+├── dtos
+├── entities
+├── exceptions
+├── repositories
+└── services
