@@ -3,10 +3,10 @@ package com.todolist.services;
 import com.todolist.dtos.TasksDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.repositories.TaskRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,12 +31,12 @@ public class TaskService {
         return taskRepository.save(request);
     }
 
-    //Metodo para listar todos as tarefas
+    //Metodo para listar todos as tarefas com paginação
     @Transactional(readOnly = true)
-    public List<TasksDTO> findAllTask(){
-        List<TasksDTO> list = taskRepository.findAll().stream().map(TasksDTO::new).toList();
+    public Page<TasksDTO> findAllPaged(Pageable pageable){
+        Page<Tasks> tasksPage = taskRepository.findAll(pageable);
 
-        return list;
+        return tasksPage.map(TasksDTO::new);
     }
 
     //Metodo para retornar apenas uma tarefa pelo ID requisitado
