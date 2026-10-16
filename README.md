@@ -32,12 +32,11 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Marcar tarefa como concluída
 - [x] Validação dos dados
 - [x] Tratamento de exceções
-- [ ] Paginação
+- [x] Paginação
+- [ ] Filtros e ordenação
 
 ### Futuras funcionalidades
 
-
-- [ ] Filtros e ordenação
 - [ ] Autenticação e autorização
 - [ ] Documentação da API com Swagger/OpenAPI
 - [ ] Testes automatizados
