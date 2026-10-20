@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
@@ -40,5 +40,8 @@ public class AuthenticationController {
         String encrypetedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.email(), encrypetedPassword, data.role());
 
+        this.repository.save(newUser);
+
+        return ResponseEntity.ok().build();
     }
 }
