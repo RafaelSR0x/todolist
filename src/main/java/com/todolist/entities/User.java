@@ -1,8 +1,7 @@
 package com.todolist.entities;
 
 import com.todolist.entities.enums.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +14,8 @@ import java.util.List;
 @Table(name = "users")
 public class User implements UserDetails {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String email;
     private String password;
