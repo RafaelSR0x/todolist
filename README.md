@@ -42,6 +42,11 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 
 - [ ] Testes automatizados
 
+## 📖 Documentação da API
+
+A documentação completa das rotas, parâmetros, exemplos e códigos de resposta
+está em [docs/API.md](docs/API.md).
+
 ## 📂 Estrutura do projeto
 
 A estrutura será organizada seguindo uma separação de responsabilidades:
