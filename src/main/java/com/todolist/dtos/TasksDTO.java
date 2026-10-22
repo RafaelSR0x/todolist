@@ -20,7 +20,7 @@ public class TasksDTO {
     private String description;
     private boolean completed;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAd;
+    private LocalDateTime updatedAt;
 
     public TasksDTO() {
     }
@@ -30,7 +30,7 @@ public class TasksDTO {
         description = tasks.getDescription();
         completed = tasks.isCompleted();
         createdAt = tasks.getCreatedAt();
-        updatedAd = tasks.getUpdatedAt();
+        updatedAt = tasks.getUpdatedAt();
     }
 
     public String getTitle() {
@@ -54,7 +54,7 @@ public class TasksDTO {
     }
 
     public LocalDateTime getUpdatedAd() {
-        return updatedAd;
+        return updatedAt;
     }
 
     public boolean isCompleted() {

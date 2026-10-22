@@ -1,7 +1,8 @@
 package com.todolist.services;
 
+import com.todolist.dtos.TaskRequestDTO;
 import com.todolist.dtos.TasksDTO;
-import com.todolist.dtos.TasksResponseDTO;
+import com.todolist.dtos.TaskResponseDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.entities.User;
 import com.todolist.repositories.TaskRepository;
@@ -28,17 +29,22 @@ public class TaskService {
     }
 
     //Metodo para criar nova tarefa
-    public TasksResponseDTO create(Tasks request) {
+    public TaskResponseDTO create(TaskRequestDTO request) {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        request.setUser(user);
+        Tasks task = new Tasks(
+                request.title(),
+                request.description(),
+                false,
+                user
+        );
 
-        Tasks tasksSaved = taskRepository.save(request);
+        Tasks tasksSaved = taskRepository.save(task);
 
-        return new TasksResponseDTO(
+        return new TaskResponseDTO(
                 tasksSaved.getId(),
                 tasksSaved.getTitle(),
                 tasksSaved.getDescription(),
@@ -79,7 +85,7 @@ public class TaskService {
     }
 
     //Metodo para atualizar uma tarefa pelo ID requisitado
-    public Tasks updateTask(Tasks request, Long taskId) {
+    public TaskResponseDTO updateTask(TaskRequestDTO request, Long taskId) {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -88,10 +94,19 @@ public class TaskService {
         Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
 
-        tasks.setTitle(request.getTitle());
-        tasks.setDescription(request.getDescription());
+        tasks.setTitle(request.title());
+        tasks.setDescription(request.description());
 
-        return taskRepository.save(tasks);
+        Tasks updatedTask = taskRepository.save(tasks);
+
+        return new TaskResponseDTO(
+                updatedTask.getId(),
+                updatedTask.getTitle(),
+                updatedTask.getDescription(),
+                updatedTask.isCompleted(),
+                updatedTask.getCreatedAt(),
+                updatedTask.getUpdatedAt()
+        );
     }
 
     //Metodo para deletar uma tarefa pelo Id requisitado

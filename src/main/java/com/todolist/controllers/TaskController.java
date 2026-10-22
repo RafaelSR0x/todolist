@@ -1,8 +1,9 @@
 package com.todolist.controllers;
 
 import com.todolist.dtos.PageResponseDTO;
+import com.todolist.dtos.TaskRequestDTO;
 import com.todolist.dtos.TasksDTO;
-import com.todolist.dtos.TasksResponseDTO;
+import com.todolist.dtos.TaskResponseDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.services.TaskService;
 import jakarta.validation.Valid;
@@ -23,8 +24,8 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping()
-    public ResponseEntity<TasksResponseDTO> createTask(@Valid @RequestBody Tasks request) {
-        TasksResponseDTO tasks = taskService.create(request);
+    public ResponseEntity<TaskResponseDTO> createTask(@Valid @RequestBody TaskRequestDTO request) {
+        TaskResponseDTO tasks = taskService.create(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(tasks);
     }
@@ -62,9 +63,11 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}")
-    public ResponseEntity<Tasks> updateTask(@Valid @RequestBody Tasks request, @PathVariable Long taskId){
-        Tasks tasks = taskService.updateTask(request, taskId);
-        return ResponseEntity.ok(tasks);
+    public ResponseEntity<TaskResponseDTO> updateTask(
+            @Valid @RequestBody TaskRequestDTO request,
+            @PathVariable Long taskId){
+        TaskResponseDTO task = taskService.updateTask(request, taskId);
+        return ResponseEntity.ok(task);
     }
 
     @DeleteMapping("/{taskId}")

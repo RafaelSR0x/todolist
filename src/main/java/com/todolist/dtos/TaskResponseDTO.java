@@ -2,7 +2,7 @@ package com.todolist.dtos;
 
 import java.time.LocalDateTime;
 
-public record TasksResponseDTO(
+public record TaskResponseDTO(
         Long id,
         String title,
         String description,
