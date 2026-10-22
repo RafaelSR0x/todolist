@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({
+        "id",
         "title",
         "description",
         "completed",
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 public class TasksDTO {
 
+    private Long id;
     private String title;
     private String description;
     private boolean completed;
@@ -26,11 +28,20 @@ public class TasksDTO {
     }
 
     public TasksDTO(Tasks tasks) {
+        id = tasks.getId();
         title = tasks.getTitle();
         description = tasks.getDescription();
         completed = tasks.isCompleted();
         createdAt = tasks.getCreatedAt();
         updatedAt = tasks.getUpdatedAt();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

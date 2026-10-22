@@ -31,7 +31,7 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
         var emailPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(emailPassword);
 
@@ -41,7 +41,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterDTO data) {
         this.autheticationService.userRegister(data);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
