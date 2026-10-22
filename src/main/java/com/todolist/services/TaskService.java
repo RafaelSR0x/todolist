@@ -22,10 +22,10 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     //metodo para centralizar a busca de uma tarefa por ID
-    private Tasks findTaskOrThrow(Long taskId) {
-        return taskRepository.findById(taskId).
+    private Tasks findTaskByIdAndUser(Long taskId, User user) {
+        return taskRepository.findByIdAndUserId(taskId, user.getId()).
                 orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "o item com o ID informado não foi encontrado."));
+                        HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
     }
 
     //Metodo para criar nova tarefa
@@ -91,8 +91,7 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        Tasks tasks = findTaskByIdAndUser(taskId, user);
 
         tasks.setTitle(request.title());
         tasks.setDescription(request.description());
@@ -116,8 +115,7 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        Tasks tasks = findTaskByIdAndUser(taskId, user);
 
         taskRepository.delete(tasks);
     }
@@ -129,8 +127,7 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        Tasks tasks = findTaskByIdAndUser(taskId, user);
 
         if (tasks.isCompleted()) {
             throw new ResponseStatusException(
@@ -151,8 +148,7 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        Tasks tasks = findTaskByIdAndUser(taskId, user);
 
         if (!tasks.isCompleted()) {
             throw new ResponseStatusException(
