@@ -128,4 +128,26 @@ public class TaskService {
         return taskRepository.save(tasks);
 
     }
+
+    //metodo para reabrir uma tarefa
+    public Tasks markAsIncomplete(Long taskId) {
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+
+        if (!tasks.isCompleted()) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "A tarefa já está pendente"
+            );
+        }
+
+        tasks.setCompleted(false);
+
+        return taskRepository.save(tasks);
+
+    }
 }
