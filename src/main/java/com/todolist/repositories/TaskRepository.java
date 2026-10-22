@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("""
-    SELECT t FROM Tasks t
+    SELECT t FROM Task t
     WHERE t.user.id = :userId
     AND (:completed IS NULL OR t.completed = :completed)
     AND (

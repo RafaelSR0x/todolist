@@ -64,7 +64,7 @@ public class TasksDTO {
         return createdAt;
     }
 
-    public LocalDateTime getUpdatedAd() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 

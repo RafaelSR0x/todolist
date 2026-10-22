@@ -4,8 +4,7 @@ import com.todolist.dtos.AuthenticationDTO;
 import com.todolist.dtos.LoginResponseDTO;
 import com.todolist.dtos.RegisterDTO;
 import com.todolist.entities.User;
-import com.todolist.repositories.UserRepository;
-import com.todolist.services.AutheticationService;
+import com.todolist.services.AuthenticationService;
 import com.todolist.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +24,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private AutheticationService autheticationService;
+    private AuthenticationService authenticationService;
     @Autowired
     private TokenService tokenService;
 
@@ -42,7 +40,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterDTO data) {
-        this.autheticationService.userRegister(data);
+        this.authenticationService.userRegister(data);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
