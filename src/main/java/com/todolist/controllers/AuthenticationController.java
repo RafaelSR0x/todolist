@@ -5,6 +5,7 @@ import com.todolist.dtos.LoginResponseDTO;
 import com.todolist.dtos.RegisterDTO;
 import com.todolist.entities.User;
 import com.todolist.repositories.UserRepository;
+import com.todolist.services.AutheticationService;
 import com.todolist.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private UserRepository repository;
+    private AutheticationService autheticationService;
     @Autowired
     private TokenService tokenService;
 
@@ -41,13 +42,8 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        if (this.repository.findByEmail(data.email()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        this.autheticationService.userRegister(data);
 
-        String encrypetedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.email(), encrypetedPassword, data.role());
-
-        this.repository.save(newUser);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
