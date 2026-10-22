@@ -56,6 +56,10 @@ src/main/java/com/todolist
 ├── controllers
 ├── dtos
 ├── entities
+    ├── enums
 ├── exceptions
+├── infra
+    ├── docs
+    ├── security
 ├── repositories
 └── services
