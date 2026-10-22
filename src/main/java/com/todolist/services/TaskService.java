@@ -67,7 +67,13 @@ public class TaskService {
 
     //Metodo para retornar apenas uma tarefa pelo ID requisitado
     public TasksDTO findById(Long taskId) {
-        Tasks tasks = findTaskOrThrow(taskId);
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
 
         return new TasksDTO(tasks);
     }
