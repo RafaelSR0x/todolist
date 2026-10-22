@@ -28,11 +28,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String id, String email, String password, UserRole role) {
+    public User(String id, String email, String password, UserRole role, List<Tasks> tasks) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.tasks = tasks;
     }
 
     public User(String email, String password, UserRole role) {
@@ -63,6 +64,14 @@ public class User implements UserDetails {
 
     public void setRole(UserRole role) {
         this.role = role;
+    }
+
+    public List<Tasks> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Tasks> tasks) {
+        this.tasks = tasks;
     }
 
     @Override

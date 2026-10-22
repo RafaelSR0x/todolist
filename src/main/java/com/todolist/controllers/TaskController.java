@@ -2,6 +2,7 @@ package com.todolist.controllers;
 
 import com.todolist.dtos.PageResponseDTO;
 import com.todolist.dtos.TasksDTO;
+import com.todolist.dtos.TasksResponseDTO;
 import com.todolist.entities.Tasks;
 import com.todolist.services.TaskService;
 import jakarta.validation.Valid;
@@ -22,8 +23,8 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping()
-    public ResponseEntity<Tasks> createTask(@Valid @RequestBody Tasks request) {
-        Tasks tasks = taskService.create(request);
+    public ResponseEntity<TasksResponseDTO> createTask(@Valid @RequestBody Tasks request) {
+        TasksResponseDTO tasks = taskService.create(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(tasks);
     }

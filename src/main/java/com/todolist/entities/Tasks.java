@@ -42,10 +42,11 @@ public class Tasks {
 
     }
 
-    public Tasks(String title, String description, boolean completed) {
+    public Tasks(String title, String description, boolean completed, User user) {
         this.title = title;
         this.description = description;
         this.completed = completed;
+        this.user = user;
     }
 
     public Long getId() {
@@ -82,5 +83,13 @@ public class Tasks {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

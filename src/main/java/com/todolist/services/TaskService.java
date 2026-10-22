@@ -1,12 +1,15 @@
 package com.todolist.services;
 
 import com.todolist.dtos.TasksDTO;
+import com.todolist.dtos.TasksResponseDTO;
 import com.todolist.entities.Tasks;
+import com.todolist.entities.User;
 import com.todolist.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,8 +28,24 @@ public class TaskService {
     }
 
     //Metodo para criar nova tarefa
-    public Tasks create(Tasks request) {
-        return taskRepository.save(request);
+    public TasksResponseDTO create(Tasks request) {
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        request.setUser(user);
+
+        Tasks tasksSaved = taskRepository.save(request);
+
+        return new TasksResponseDTO(
+                tasksSaved.getId(),
+                tasksSaved.getTitle(),
+                tasksSaved.getDescription(),
+                tasksSaved.isCompleted(),
+                tasksSaved.getCreatedAt(),
+                tasksSaved.getUpdatedAt()
+        );
     }
 
     //Metodo para listar todos as tarefas com paginação
