@@ -7,6 +7,10 @@ import com.todolist.entities.User;
 import com.todolist.services.AuthenticationService;
 import com.todolist.services.TokenService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Autenticação", description = "Cadastro de usuários e autenticação")
 public class AuthenticationController {
 
     @Autowired
@@ -29,6 +34,12 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
+    @Operation(summary = "Autenticar usuário", description = "Gera um token JWT para acessar os endpoints protegidos.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados de login inválidos"),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
+    })
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
         var emailPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(emailPassword);
@@ -39,6 +50,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Cadastrar usuário")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados de cadastro inválidos"),
+            @ApiResponse(responseCode = "409", description = "E-mail já cadastrado")
+    })
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterDTO data) {
         this.authenticationService.userRegister(data);
 

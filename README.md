@@ -35,12 +35,12 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Paginação
 - [x] Filtros e ordenação
 - [x] Autenticação e autorização
-- [ ] Documentação da API com Swagger/OpenAPI
+- [x] Documentação da API com Swagger/OpenAPI
+- [ ] Docker
 
 ### Futuras funcionalidades
 
 - [ ] Testes automatizados
-- [ ] Docker
 
 ## 📂 Estrutura do projeto
 
