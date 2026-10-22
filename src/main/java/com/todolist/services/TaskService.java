@@ -109,7 +109,13 @@ public class TaskService {
 
     //metodo para marcar como concluido a tarefa
     public Tasks markAsCompleted(Long taskId) {
-        Tasks tasks = findTaskOrThrow(taskId);
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
 
         if (tasks.isCompleted()) {
             throw new ResponseStatusException(
