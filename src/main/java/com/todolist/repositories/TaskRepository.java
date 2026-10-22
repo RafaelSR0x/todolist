@@ -9,16 +9,19 @@ import org.springframework.data.repository.query.Param;
 
 public interface TaskRepository extends JpaRepository<Tasks, Long> {
     @Query("""
-        SELECT t FROM Tasks t
-        WHERE (:completed IS NULL OR t.completed = :completed)
-        AND (
-            :title IS NULL
-             OR LOWER(t.title) LIKE CONCAT('%', LOWER(CAST(:title AS string)), '%')
-             )
+    SELECT t FROM Tasks t
+    WHERE t.user.id = :userId
+    AND (:completed IS NULL OR t.completed = :completed)
+    AND (
+        :title IS NULL
+        OR LOWER(t.title) LIKE
+           CONCAT('%', LOWER(CAST(:title AS string)), '%')
+    )
 """)
     Page<Tasks> findAllFiltered(
             @Param("completed") Boolean completed,
             @Param("title") String title,
+            @Param("userId") String userId,
             Pageable pageable
     );
 }

@@ -51,7 +51,16 @@ public class TaskService {
     //Metodo para listar todos as tarefas com paginação
     @Transactional(readOnly = true)
     public Page<TasksDTO> findAllPaged(Boolean completed, String title,Pageable pageable){
-        Page<Tasks> tasksPage = taskRepository.findAllFiltered(completed, title, pageable);
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Page<Tasks> tasksPage = taskRepository.findAllFiltered(
+                completed,
+                title,
+                user.getId(),
+                pageable);
 
         return tasksPage.map(TasksDTO::new);
     }
