@@ -6,7 +6,7 @@ import com.todolist.entities.enums.UserRole;
 import com.todolist.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,14 +16,17 @@ public class AuthenticationService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User userRegister(RegisterDTO data) {
         if (this.repository.findByEmail(data.email()) != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Este email já existe.");
         }
 
-        String encrypetedPassword = new BCryptPasswordEncoder().encode(data.password());
+        String encryptedPassword = passwordEncoder.encode(data.password());
 
-        User newUser = new User(data.email(), encrypetedPassword, UserRole.USER);
+        User newUser = new User(data.email(), encryptedPassword, UserRole.USER);
 
         return repository.save(newUser);
     }

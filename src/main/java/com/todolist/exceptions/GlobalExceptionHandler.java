@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -20,15 +21,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidation(
+    public ResponseEntity<Map<String, Map<String, String>>> handleValidation(
             MethodArgumentNotValidException ex) {
 
-        String message = ex.getBindingResult()
+        Map<String, String> errors = new LinkedHashMap<>();
+        ex.getBindingResult()
                 .getFieldErrors()
-                .get(0)
-                .getDefaultMessage();
+                .forEach(error -> errors.putIfAbsent(
+                        error.getField(),
+                        error.getDefaultMessage()
+                ));
 
         return ResponseEntity.badRequest()
-                .body(Map.of("message", message));
+                .body(Map.of("errors", errors));
     }
 }

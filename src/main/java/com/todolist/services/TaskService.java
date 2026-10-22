@@ -78,8 +78,7 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Task task = taskRepository.findByIdAndUserId(taskId, user.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        Task task = findTaskByIdAndUser(taskId, user);
 
         return new TasksDTO(task);
     }
