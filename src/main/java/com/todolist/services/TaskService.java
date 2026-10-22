@@ -80,7 +80,13 @@ public class TaskService {
 
     //Metodo para atualizar uma tarefa pelo ID requisitado
     public Tasks updateTask(Tasks request, Long taskId) {
-        Tasks tasks = findTaskOrThrow(taskId);
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
 
         tasks.setTitle(request.getTitle());
         tasks.setDescription(request.getDescription());
