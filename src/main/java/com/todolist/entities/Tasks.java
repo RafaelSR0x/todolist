@@ -33,6 +33,10 @@ public class Tasks {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Tasks() {
 
