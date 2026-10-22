@@ -23,12 +23,12 @@ public class User implements UserDetails {
     private UserRole role;
 
     @OneToMany(mappedBy = "user")
-    private List<Tasks> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String id, String email, String password, UserRole role, List<Tasks> tasks) {
+    public User(String id, String email, String password, UserRole role, List<Task> tasks) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -66,11 +66,11 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public List<Tasks> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Tasks> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

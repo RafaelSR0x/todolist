@@ -4,7 +4,7 @@ import com.todolist.dtos.PageResponseDTO;
 import com.todolist.dtos.TaskRequestDTO;
 import com.todolist.dtos.TasksDTO;
 import com.todolist.dtos.TaskResponseDTO;
-import com.todolist.entities.Tasks;
+import com.todolist.entities.Task;
 import com.todolist.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,16 +79,16 @@ public class TaskController {
 
     @PatchMapping("/{taskId}/completed")
     public ResponseEntity<TasksDTO> markAsCompleted(@PathVariable Long taskId) {
-        Tasks tasks = taskService.markAsCompleted(taskId);
-        TasksDTO dto = new TasksDTO(tasks);
+        Task task = taskService.markAsCompleted(taskId);
+        TasksDTO dto = new TasksDTO(task);
 
         return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/{taskId}/incomplete")
     public ResponseEntity<TasksDTO> markAsIncomplete(@PathVariable Long taskId) {
-        Tasks tasks = taskService.markAsIncomplete(taskId);
-        TasksDTO dto = new TasksDTO(tasks);
+        Task task = taskService.markAsIncomplete(taskId);
+        TasksDTO dto = new TasksDTO(task);
 
         return ResponseEntity.ok(dto);
     }

@@ -3,7 +3,7 @@ package com.todolist.services;
 import com.todolist.dtos.TaskRequestDTO;
 import com.todolist.dtos.TasksDTO;
 import com.todolist.dtos.TaskResponseDTO;
-import com.todolist.entities.Tasks;
+import com.todolist.entities.Task;
 import com.todolist.entities.User;
 import com.todolist.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     //metodo para centralizar a busca de uma tarefa por ID
-    private Tasks findTaskByIdAndUser(Long taskId, User user) {
+    private Task findTaskByIdAndUser(Long taskId, User user) {
         return taskRepository.findByIdAndUserId(taskId, user.getId()).
                 orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
@@ -35,22 +35,22 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks task = new Tasks(
+        Task task = new Task(
                 request.title(),
                 request.description(),
                 false,
                 user
         );
 
-        Tasks tasksSaved = taskRepository.save(task);
+        Task taskSaved = taskRepository.save(task);
 
         return new TaskResponseDTO(
-                tasksSaved.getId(),
-                tasksSaved.getTitle(),
-                tasksSaved.getDescription(),
-                tasksSaved.isCompleted(),
-                tasksSaved.getCreatedAt(),
-                tasksSaved.getUpdatedAt()
+                taskSaved.getId(),
+                taskSaved.getTitle(),
+                taskSaved.getDescription(),
+                taskSaved.isCompleted(),
+                taskSaved.getCreatedAt(),
+                taskSaved.getUpdatedAt()
         );
     }
 
@@ -62,7 +62,7 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Page<Tasks> tasksPage = taskRepository.findAllFiltered(
+        Page<Task> tasksPage = taskRepository.findAllFiltered(
                 completed,
                 title,
                 user.getId(),
@@ -78,10 +78,10 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
+        Task task = taskRepository.findByIdAndUserId(taskId, user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
 
-        return new TasksDTO(tasks);
+        return new TasksDTO(task);
     }
 
     //Metodo para atualizar uma tarefa pelo ID requisitado
@@ -91,12 +91,12 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = findTaskByIdAndUser(taskId, user);
+        Task task = findTaskByIdAndUser(taskId, user);
 
-        tasks.setTitle(request.title());
-        tasks.setDescription(request.description());
+        task.setTitle(request.title());
+        task.setDescription(request.description());
 
-        Tasks updatedTask = taskRepository.save(tasks);
+        Task updatedTask = taskRepository.save(task);
 
         return new TaskResponseDTO(
                 updatedTask.getId(),
@@ -115,50 +115,50 @@ public class TaskService {
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = findTaskByIdAndUser(taskId, user);
+        Task task = findTaskByIdAndUser(taskId, user);
 
-        taskRepository.delete(tasks);
+        taskRepository.delete(task);
     }
 
     //metodo para marcar como concluido a tarefa
-    public Tasks markAsCompleted(Long taskId) {
+    public Task markAsCompleted(Long taskId) {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = findTaskByIdAndUser(taskId, user);
+        Task task = findTaskByIdAndUser(taskId, user);
 
-        if (tasks.isCompleted()) {
+        if (task.isCompleted()) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "A tarefa já está concluída"
             );
         }
 
-        tasks.setCompleted(true);
+        task.setCompleted(true);
 
-        return taskRepository.save(tasks);
+        return taskRepository.save(task);
 
     }
 
     //metodo para reabrir uma tarefa
-    public Tasks markAsIncomplete(Long taskId) {
+    public Task markAsIncomplete(Long taskId) {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
 
-        Tasks tasks = findTaskByIdAndUser(taskId, user);
+        Task task = findTaskByIdAndUser(taskId, user);
 
-        if (!tasks.isCompleted()) {
+        if (!task.isCompleted()) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "A tarefa já está pendente"
             );
         }
 
-        tasks.setCompleted(false);
+        task.setCompleted(false);
 
-        return taskRepository.save(tasks);
+        return taskRepository.save(task);
 
     }
 }

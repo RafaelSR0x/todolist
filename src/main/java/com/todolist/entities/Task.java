@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
-public class Tasks {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +38,11 @@ public class Tasks {
     private User user;
 
 
-    public Tasks() {
+    public Task() {
 
     }
 
-    public Tasks(String title, String description, boolean completed, User user) {
+    public Task(String title, String description, boolean completed, User user) {
         this.title = title;
         this.description = description;
         this.completed = completed;

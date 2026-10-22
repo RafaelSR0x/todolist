@@ -1,6 +1,6 @@
 package com.todolist.dtos;
 
-import com.todolist.entities.Tasks;
+import com.todolist.entities.Task;
 
 import java.time.LocalDateTime;
 
@@ -27,13 +27,13 @@ public class TasksDTO {
     public TasksDTO() {
     }
 
-    public TasksDTO(Tasks tasks) {
-        id = tasks.getId();
-        title = tasks.getTitle();
-        description = tasks.getDescription();
-        completed = tasks.isCompleted();
-        createdAt = tasks.getCreatedAt();
-        updatedAt = tasks.getUpdatedAt();
+    public TasksDTO(Task task) {
+        id = task.getId();
+        title = task.getTitle();
+        description = task.getDescription();
+        completed = task.isCompleted();
+        createdAt = task.getCreatedAt();
+        updatedAt = task.getUpdatedAt();
     }
 
     public Long getId() {
