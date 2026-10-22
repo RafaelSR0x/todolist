@@ -96,7 +96,13 @@ public class TaskService {
 
     //Metodo para deletar uma tarefa pelo Id requisitado
     public void deleteTask(Long taskId){
-        Tasks tasks = findTaskOrThrow(taskId);
+        User user = (User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
+        Tasks tasks = taskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
 
         taskRepository.delete(tasks);
     }
