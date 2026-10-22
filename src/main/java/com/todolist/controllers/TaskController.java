@@ -81,4 +81,12 @@ public class TaskController {
 
         return ResponseEntity.ok(dto);
     }
+
+    @PatchMapping("/{taskId}/incomplete")
+    public ResponseEntity<TasksDTO> markAsIncomplete(@PathVariable Long taskId) {
+        Tasks tasks = taskService.markAsIncomplete(taskId);
+        TasksDTO dto = new TasksDTO(tasks);
+
+        return ResponseEntity.ok(dto);
+    }
 }
