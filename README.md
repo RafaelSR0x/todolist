@@ -34,11 +34,11 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Tratamento de exceções
 - [x] Paginação
 - [x] Filtros e ordenação
-- [ ] Autenticação e autorização
+- [x] Autenticação e autorização
+- [ ] Documentação da API com Swagger/OpenAPI
 
 ### Futuras funcionalidades
 
-- [ ] Documentação da API com Swagger/OpenAPI
 - [ ] Testes automatizados
 - [ ] Docker
 
