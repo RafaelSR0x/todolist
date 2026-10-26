@@ -36,11 +36,9 @@ O projeto será desenvolvido de forma incremental, com novas funcionalidades sen
 - [x] Filtros e ordenação
 - [x] Autenticação e autorização
 - [x] Documentação da API com Swagger/OpenAPI
-- [ ] Docker
-
-### Futuras funcionalidades
-
+- [x] Docker
 - [ ] Testes automatizados
+
 
 ## 📖 Documentação da API
 
